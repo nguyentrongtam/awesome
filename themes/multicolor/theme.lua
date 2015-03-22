@@ -1,15 +1,15 @@
 --[[
-                                      
-     Multicolor Awesome WM config 2.0 
-     github.com/copycat-killer        
-                                      
+
+     Multicolor Awesome WM config 2.0
+     github.com/copycat-killer
+
 --]]
 
 
 theme                               = {}
 
 theme.confdir                       = os.getenv("HOME") .. "/.config/awesome/themes/multicolor"
-theme.wallpaper                     = theme.confdir .. "/wall.png"
+theme.wallpaper                     = theme.confdir .. "/6.jpg"
 
 theme.font                          = "Terminus 10.5"
 --theme.taglist_font                =

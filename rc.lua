@@ -1,8 +1,8 @@
 --[[
-                                      
-     Multicolor Awesome WM config 2.0 
-     github.com/copycat-killer        
-                                      
+
+     Multicolor Awesome WM config 2.0
+     github.com/copycat-killer
+
 --]]
 
 -- {{{ Required libraries
@@ -52,9 +52,10 @@ run_once("urxvtd")
 run_once("unclutter")
 
 -- my custom
-run_once("skype")
-run_once("thunderbird")
-run_once("subl")
+run_once("xscreensaver -nosplash &")
+-- run_once("skype")
+-- run_once("thunderbird")
+-- run_once("subl")
 
 
 
@@ -73,6 +74,10 @@ altkey     = "Mod1"
 terminal   = "gnome-terminal" or "urxvtc" or "xterm"
 editor     = os.getenv("EDITOR") or "nano" or "vi"
 editor_cmd = terminal .. " -e " .. editor
+touchpad   = {
+    enable = "synclient touchpadoff=0",
+    disable = "synclient touchpadoff=1",
+}
 
 -- user defined
 browser    = "dwb"
@@ -97,12 +102,13 @@ local layouts = {
 
 -- {{{ Tags
 tags = {
-   names = { "WEB", "CODE", "TERMINAL", "FILES", "CHAT" },
+   names = { "WEB", "CODE", "TERMINAL", "FILES", "OTHER" },
    layout = { layouts[1], layouts[3], layouts[4], layouts[1], layouts[7], layouts[1] }
 }
 for s = 1, screen.count() do
 -- Each screen has its own tag table.
-   tags[s] = awful.tag(tags.names, s, tags.layout)
+   -- tags[s] = awful.tag(tags.names, s, layout[])
+   tags[s] = awful.tag(tags.names, s, awful.layout.suit.tile)
 end
 -- }}}
 
@@ -171,7 +177,11 @@ cpuicon = wibox.widget.imagebox()
 cpuicon:set_image(beautiful.widget_cpu)
 cpuwidget = lain.widgets.cpu({
     settings = function()
-        widget:set_markup(markup("#e33a6e", cpu_now.usage .. "% "))
+        if tonumber(cpu_now.usage) < 10 then
+            widget:set_markup(markup("#e33a6e", "0" .. cpu_now.usage .. "% "))
+        else
+            widget:set_markup(markup("#e33a6e", cpu_now.usage .. "% "))
+        end
     end
 })
 
@@ -354,7 +364,7 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the upper right
     local right_layout = wibox.layout.fixed.horizontal()
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
+    if s == 2 then right_layout:add(wibox.widget.systray()) end
     --right_layout:add(mailicon)
     --right_layout:add(mailwidget)
     -- right_layout:add(netdownicon)
@@ -394,7 +404,7 @@ for s = 1, screen.count() do
     bottom_left_layout = wibox.layout.fixed.horizontal()
 
     -- Widgets that are aligned to the bottom right
-    
+
 
     -- Now bring it all together (with the tasklist in the middle)
     bottom_layout = wibox.layout.align.horizontal()
@@ -501,7 +511,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r",      awesome.restart),
     awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
-
     -- Dropdown terminal
     awful.key({ modkey,	          }, "z",      function () drop(terminal) end),
 
@@ -512,8 +521,14 @@ globalkeys = awful.util.table.join(
 
     -- my custom
     -- awful.key({ }, "F12", function () awful.util.spawn("google-chrome") end),
-    awful.key({modkey,           }, "c", function () awful.util.spawn("google-chrome") end),
-    awful.key({modkey,           }, "e", function () awful.util.spawn("pcmanfm") end),
+    awful.key({ modkey,           }, "c", function () awful.util.spawn("google-chrome") end),
+    awful.key({ modkey,           }, "e", function () awful.util.spawn("pcmanfm") end),
+    awful.key({ modkey,           }, "s", function () awful.util.spawn("subl") end),
+    awful.key({ modkey,           }, "p", function () awful.util.spawn("skype") end),
+    awful.key({ modkey,           }, "F3", function () awful.util.spawn("gnome-do") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    -- resetart
+    -- awful.key({ altkey,  "Control" }, "r", function () awful.util.spawn("gnome-do") end),
 
 
     -- ALSA volume control
@@ -529,13 +544,29 @@ globalkeys = awful.util.table.join(
         end),
     awful.key({ altkey }, "m",
         function ()
-            awful.util.spawn(string.format("amixer -c %s set %s toggle", volumewidget.card, volumewidget.channel))
-            --awful.util.spawn(string.format("amixer set %s toggle", volumewidget.channel))
+            awful.util.spawn(string.format("pactl set-sink-mute 0 1", volumewidget.card, volumewidget.channel))
+            -- awful.util.spawn(string.format("amixer set %s toggle", volumewidget.channel))
             volumewidget.update()
         end),
-    awful.key({ altkey, "Control" }, "m",
+    -- awful.key({ altkey, "Control" }, "m",
+    awful.key({ altkey, "Shift" }, "m",
         function ()
-            awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
+            -- awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
+            awful.util.spawn(string.format("pactl set-sink-mute 0 0", volumewidget.card, volumewidget.channel))
+            volumewidget.update()
+        end),
+    -- touch pad
+    awful.key({ altkey, "Shift" }, "F3",
+        function ()
+            -- awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
+            awful.util.spawn(string.format(touchpad.enable  , volumewidget.card, volumewidget.channel))
+            volumewidget.update()
+        end),
+
+    awful.key({ altkey,      }, "F3",
+        function ()
+            -- awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
+            awful.util.spawn(string.format(touchpad.disable  , volumewidget.card, volumewidget.channel))
             volumewidget.update()
         end),
 
@@ -583,7 +614,7 @@ globalkeys = awful.util.table.join(
 
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
+    awful.key({ modkey, "Shift"   }, "w",      function (c) c:kill()                         end),
     -- my custom
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
@@ -663,13 +694,17 @@ awful.rules.rules = {
         properties = { tag = tags[1][5] } },
 
     { rule = { class = "Thunderbird" },
-        properties = { tag = tags[1][5] } },
+        properties = { tag = tags[2][5] } },
 
-    { rule = { class = "Google-chrome" },
-            properties = { tag = tags[1][1] } },
-            
-    { rule = { class = "Subl" },
-        properties = { tag = tags[1][2] } },
+    -- { rule = { class = "Google-chrome" },
+    --     if s == 1 then
+    --       properties = { tag = tags[1][5] }
+    --     else s == 2 then
+    --       properties = { tag = tags[2][5] }
+    -- },
+
+    -- { rule = { class = "Subl" },
+    --     properties = { tag = tags[1][2] } },
 
 
     { rule = { class = "URxvt" },
@@ -692,7 +727,7 @@ awful.rules.rules = {
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized_horizontal = true,
-                         maximized_vertical = true } }, 
+                         maximized_vertical = true } },
 }
 -- }}}
 
