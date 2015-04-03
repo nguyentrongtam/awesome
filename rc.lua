@@ -525,6 +525,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "e", function () awful.util.spawn("pcmanfm") end),
     awful.key({ modkey,           }, "s", function () awful.util.spawn("subl") end),
     awful.key({ modkey,           }, "p", function () awful.util.spawn("skype") end),
+    awful.key({ modkey,           }, "t", function () awful.util.spawn("thunderbird") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn("gnome-do") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
     -- resetart

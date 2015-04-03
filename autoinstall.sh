@@ -19,8 +19,21 @@ echo "------------>>INSTALL My sql" &&
 sudo apt-get install mysql-server libapache2-mod-auth-mysql &&
 sudo apt-get install libmysqlclient-dev &&
 
+echo "------------>>INSTALL Awesome" &&
+sudo add-apt-repository http://ppa.launchpad.net/klaus-vormweg/awesome/ubuntu &&
+sudo apt-get update &&
+sudo apt-get install awesome &&
+sudo apt-get install gnome-do
+
+echo "------------>>INSTALL Pcmanfm" &&
+sudo add-apt-repository ppa:lubuntu-dev/lubuntu-daily &&
+sudo apt-get update &&
+sudo apt-get install pcmanfm &&
+
 echo "------------>>INSTALL Sublime text 3" &&
 echo "------------>>INSTALL Git" &&
 echo "------------>>INSTALL Oh-my-zsh" &&
 echo "------------>>INSTALL My sql" &&
+echo "------------>>INSTALL Awesome" &&
+echo "------------>>INSTALL Pcmanfm" &&
 echo "DONE ^^!"
