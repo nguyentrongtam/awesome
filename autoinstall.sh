@@ -8,7 +8,6 @@ sudo apt-get install -y sublime-text-installer &&
 echo "------------>>INSTALL Git_" &&
 sudo apt-get install git &&
 git config --global  user.name NguyenTrongTam &&
-git config --global  user.email spaceit.securities@gmail.com &&
 git config --global color.ui auto &&
 
 echo "------------>>INSTALL Oh-my-zsh" &&
