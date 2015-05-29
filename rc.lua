@@ -527,35 +527,61 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "p", function () awful.util.spawn("skype") end),
     awful.key({ modkey,           }, "t", function () awful.util.spawn("thunderbird") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn("gnome-do") end),
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    -- awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("gnome-screensaver-command -l") end),
     -- resetart
     -- awful.key({ altkey,  "Control" }, "r", function () awful.util.spawn("gnome-do") end),
 
 
     -- ALSA volume control
+    -- awful.key({ altkey }, "Up",
+    --     function ()
+    --         awful.util.spawn(string.format("amixer -c %s set %s 1+", volumewidget.card, volumewidget.channel))
+    --         volumewidget.update()
+    --     end),
+    -- awful.key({ altkey }, "Down",
+    --     function ()
+    --         awful.util.spawn(string.format("amixer -c %s set %s 1-", volumewidget.card, volumewidget.channel))
+    --         volumewidget.update()
+    --     end),
+    -- awful.key({ altkey }, "m",
+    --     function ()
+    --         awful.util.spawn(string.format("pactl set-sink-mute 0 1", volumewidget.card, volumewidget.channel))
+    --         -- awful.util.spawn(string.format("amixer set %s toggle", volumewidget.channel))
+    --         volumewidget.update()
+    --     end),
+    -- -- awful.key({ altkey, "Control" }, "m",
+    -- awful.key({ altkey, "Shift" }, "m",
+    --     function ()
+    --         -- awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
+    --         awful.util.spawn(string.format("pactl set-sink-mute 0 0", volumewidget.card, volumewidget.channel))
+    --         volumewidget.update()
+    --     end),
+
+    -- my custom
     awful.key({ altkey }, "Up",
         function ()
-            awful.util.spawn(string.format("amixer -c %s set %s 1+", volumewidget.card, volumewidget.channel))
+            awful.util.spawn("amixer -D pulse sset Master 1%+")
             volumewidget.update()
         end),
     awful.key({ altkey }, "Down",
         function ()
-            awful.util.spawn(string.format("amixer -c %s set %s 1-", volumewidget.card, volumewidget.channel))
+            awful.util.spawn("amixer -D pulse sset Master 1%-")
             volumewidget.update()
         end),
     awful.key({ altkey }, "m",
         function ()
-            awful.util.spawn(string.format("pactl set-sink-mute 0 1", volumewidget.card, volumewidget.channel))
-            -- awful.util.spawn(string.format("amixer set %s toggle", volumewidget.channel))
+            awful.util.spawn("amixer -D pulse sset Master 0%")
             volumewidget.update()
         end),
-    -- awful.key({ altkey, "Control" }, "m",
     awful.key({ altkey, "Shift" }, "m",
         function ()
-            -- awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
-            awful.util.spawn(string.format("pactl set-sink-mute 0 0", volumewidget.card, volumewidget.channel))
+            awful.util.spawn("amixer -D pulse sset Master 40%+")
             volumewidget.update()
         end),
+
+
+
     -- touch pad
     awful.key({ altkey, "Shift" }, "F3",
         function ()
@@ -566,8 +592,8 @@ globalkeys = awful.util.table.join(
 
     awful.key({ altkey,      }, "F3",
         function ()
-            -- awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
-            awful.util.spawn(string.format(touchpad.disable  , volumewidget.card, volumewidget.channel))
+            awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
+            -- awful.util.spawn(string.format(touchpad.disable  , volumewidget.card, volumewidget.channel))
             volumewidget.update()
         end),
 
