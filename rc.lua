@@ -108,7 +108,7 @@ tags = {
 for s = 1, screen.count() do
 -- Each screen has its own tag table.
    -- tags[s] = awful.tag(tags.names, s, layout[])
-   tags[s] = awful.tag(tags.names, s, awful.layout.suit.tile)
+   tags[s] = awful.tag(tags.names, s, awful.layout.suit.max)
 end
 -- }}}
 
@@ -381,8 +381,8 @@ for s = 1, screen.count() do
     -- right_layout:add(yawn.widget)
     right_layout:add(tempicon)
     right_layout:add(tempwidget)
-    right_layout:add(volicon)
-    right_layout:add(volumewidget)
+    -- right_layout:add(volicon)
+    -- right_layout:add(volumewidget)
     -- right_layout:add(baticon)
     -- right_layout:add(batwidget)
     right_layout:add(clockicon)
@@ -587,14 +587,14 @@ globalkeys = awful.util.table.join(
         function ()
             -- awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
             awful.util.spawn(string.format(touchpad.enable  , volumewidget.card, volumewidget.channel))
-            volumewidget.update()
+            -- volumewidget.update()
         end),
 
     awful.key({ altkey,      }, "F3",
         function ()
             awful.util.spawn(string.format("amixer -c %s set %s 100%%", volumewidget.card, volumewidget.channel))
             -- awful.util.spawn(string.format(touchpad.disable  , volumewidget.card, volumewidget.channel))
-            volumewidget.update()
+            -- volumewidget.update()
         end),
 
     -- MPD control
