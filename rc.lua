@@ -52,9 +52,10 @@ run_once("urxvtd")
 run_once("unclutter")
 
 -- my custom
-run_once("xscreensaver -nosplash &")
+-- run_once("xscreensaver -nosplash &")
 -- run_once("skype")
--- run_once("thunderbird")
+run_once("thunderbird")
+run_once("google-chrome")
 -- run_once("subl")
 
 
@@ -527,6 +528,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "p", function () awful.util.spawn("skype") end),
     awful.key({ modkey,           }, "t", function () awful.util.spawn("thunderbird") end),
     awful.key({ modkey,           }, "F3", function () awful.util.spawn("gnome-do") end),
+    awful.key({ altkey,           }, "F3", function () awful.util.spawn("xbacklight -inc 10") end),
+    awful.key({ altkey,           }, "F2", function () awful.util.spawn("xbacklight -dec 10") end),
     -- awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("gnome-screensaver-command -l") end),
     -- resetart
